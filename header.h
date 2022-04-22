@@ -10,3 +10,4 @@ void showtable(vector<char> table );
 vector<char> makeplay(vector<char> table, char choise,int option);
 vector<char> playerTurn(vector<char> table, char choise);
 vector<char> cpuTurn(vector<char> table, char choise);
+int verifyWin(vector<char> table, char choise);

@@ -7,14 +7,16 @@ int main()
     {
         cout << "Do you wish to play tick-tac-toe?\ny=yes    n=no\n";
         cin >> option;
-    } while (option != 'y' && option != 'Y' && option != 'n' && option != 'N');
-    if (option == 'y' || option == 'Y')
+        option = towupper(option);
+    } while (option != 'Y'&& option != 'N');
+    if (option == 'Y')
     {
         do
         {
             cout << "Do you wanna play with X ou O ?";
             cin >> choise;
-        } while (choise != 'x' && choise != 'X' && choise != 'o' && choise != 'O');
+            choise = toupper(choise);
+        } while (choise != 'X' && choise != 'O');
         startgame(choise);
     }
     else
@@ -30,7 +32,6 @@ void startgame(char choise)
     int win = -1;
     do
     {
-        win = verifyWin();
         if (turn)
         {
             showtable(table);
@@ -40,16 +41,128 @@ void startgame(char choise)
         {
             table = cpuTurn(table, choise);
         }
+        win = verifyWin(table,choise);
         turn = !turn;
     } while (win == -1);
 
-    cout << "Fim do jogo";
+    cout << "End of the game\n";
+}
+
+int verifyWin(vector<char> table, char choise)
+{
+    // verifica se o jogo foi ganho
+    if (table[0] == table[1] && table[1] == table[2]) 
+    {
+        if (choise == table[0])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[0] == table[3] && table[3] == table[6]) 
+    {
+        if (choise == table[0])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[0] == table[4] && table[4] == table[8]) 
+    {
+        if (choise == table[0])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[1] == table[4] && table[4] == table[7]) 
+    {
+        if (choise == table[1])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[2] == table[5] && table[5] == table[8]) 
+    {
+        if (choise == table[2])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[2] == table[4] && table[4] == table[6]) 
+    {
+        if (choise == table[2])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[3] == table[4] && table[4] == table[5]) 
+    {
+        if (choise == table[3])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+    else if (table[6] == table[7] && table[7] == table[8]) 
+    {
+        if (choise == table[6])
+        {
+            printf("----------You win !!----------\n");
+        }
+        else
+        {
+            printf("----------You lose !!----------\n");
+        }
+        showtable(table);
+        return 1;
+    }
+
+    return -1;
 }
 
 vector<char> initializeTable(vector<char> table)
 {
     char charValue;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i <= table.size(); i++)
     {
         char charValue = i + '0';
         table[i] = charValue;
@@ -90,13 +203,26 @@ vector<char> playerTurn(vector<char> table, char choise)
 
 vector<char> cpuTurn(vector<char> table, char choise)
 {
-    cout << "In progress\n";
+    char cpuChoise;
+    if(choise == 'X')
+        cpuChoise = 'O';
+    else
+        cpuChoise = 'X';
+    for (int i = 0; i <= table.size(); i++)
+    {
+        if (table[i] != 'X'&& table[i] != 'O')
+        {
+            table = makeplay(table,cpuChoise, i);
+            return table;
+        }
+    }
+    
     return table;
 }
 
 vector<char> makeplay(vector<char> table, char choise, int option)
 {
-    if (table[option] == 'x' || table[option] == 'X' || table[option] == 'o' || table[option] == 'O')
+    if (table[option] == 'X'|| table[option] == 'O')
     {
         cout << "invalid option\n";
         showtable(table);
@@ -111,7 +237,7 @@ vector<char> makeplay(vector<char> table, char choise, int option)
     }
     else
     {
-        if (choise == 'x' || choise == 'X')
+        if (choise == 'X')
         {
             table[option] = 'X';
         }
@@ -121,9 +247,4 @@ vector<char> makeplay(vector<char> table, char choise, int option)
         }
         return table;
     }
-}
-
-int verifyWin(vector<char> table)
-{
-    cout << "verify if someone win under construiction";
 }
